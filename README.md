@@ -1,16 +1,58 @@
-# React + Vite
+# Cookly API
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Cookly is a recipe-sharing backend built with Express, MongoDB, and JWT auth.
 
-Currently, two official plugins are available:
+## Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Install dependencies:
 
-## React Compiler
+   ```bash
+   npm install
+   ```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+2. Create `.env` from `.env.example` and set:
 
-## Expanding the ESLint configuration
+   ```bash
+   MONGODB_URI=your_mongodb_atlas_connection_string
+   JWT_SECRET=your_long_random_secret
+   PORT=5000
+   CLIENT_ORIGIN=http://localhost:5173
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3. Start the API:
+
+   ```bash
+   npm run dev
+   ```
+
+The API runs on `http://localhost:5000` by default.
+
+## Scripts
+
+- `npm run dev`: start the API with nodemon.
+- `npm start`: start the API with Node.
+- `npm run lint`: run ESLint.
+- `npm run check`: syntax-check the server entrypoint.
+- `npm test`: run lint and syntax checks.
+
+## API
+
+### Auth
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `GET /api/auth/me`
+
+### Recipes
+
+- `GET /api/recipes`
+- `GET /api/recipes/:id`
+- `POST /api/recipes`
+- `PUT /api/recipes/:id`
+- `DELETE /api/recipes/:id`
+
+Protected routes require:
+
+```http
+Authorization: Bearer <token>
+```

@@ -12,6 +12,19 @@ const cleanList = (value) => {
     .filter(Boolean)
 }
 
+const cleanTags = (value) => {
+  if (Array.isArray(value)) {
+    return cleanList(value)
+  }
+
+  return String(value || '')
+    .split(/[\n,]/)
+    .map((item) => item.trim())
+    .filter(Boolean)
+}
+
+const escapeRegex = (value) => String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
 const recipePayload = (body) => ({
   title: body.title,
   description: body.description,
@@ -23,7 +36,7 @@ const recipePayload = (body) => ({
   servings: Number(body.servings),
   difficulty: body.difficulty,
   cuisine: body.cuisine,
-  tags: cleanList(body.tags),
+  tags: cleanTags(body.tags),
 })
 
 const ensureObjectId = (id) => mongoose.Types.ObjectId.isValid(id)
@@ -40,7 +53,7 @@ export const listRecipes = async (req, res, next) => {
     }
 
     if (cuisine) {
-      filter.cuisine = new RegExp(`^${String(cuisine).trim()}$`, 'i')
+      filter.cuisine = new RegExp(`^${escapeRegex(String(cuisine).trim())}$`, 'i')
     }
 
     if (difficulty) {
@@ -48,7 +61,7 @@ export const listRecipes = async (req, res, next) => {
     }
 
     if (tag) {
-      filter.tags = new RegExp(`^${String(tag).trim()}$`, 'i')
+      filter.tags = new RegExp(`^${escapeRegex(String(tag).trim())}$`, 'i')
     }
 
     if (author && ensureObjectId(author)) {

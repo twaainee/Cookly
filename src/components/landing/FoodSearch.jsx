@@ -1,10 +1,10 @@
 const categories = [
-  'Pizza',
-  'Burger',
-  'Noodles',
-  'Sub-sandwich',
-  'Chowmein',
-  'Steak',
+  { name: 'Pizza', tone: 'tomato' },
+  { name: 'Burger', tone: 'charcoal' },
+  { name: 'Noodles', tone: 'cream' },
+  { name: 'Sub-sandwich', tone: 'green' },
+  { name: 'Chowmein', tone: 'sage' },
+  { name: 'Steak', tone: 'grill' },
 ]
 
 function FoodSearch() {
@@ -28,11 +28,11 @@ function FoodSearch() {
 
         <div className="category-row">
           {categories.map((category) => (
-            <article className="category-card" key={category}>
-              <div className="category-image placeholder-image">
-                <span>{category}</span>
+            <article className="category-card" key={category.name}>
+              <div className={`category-image category-image--${category.tone}`} aria-label={`${category.name} image placeholder`}>
+                <span>Image</span>
               </div>
-              <h3>{category}</h3>
+              <h3>{category.name}</h3>
             </article>
           ))}
         </div>
